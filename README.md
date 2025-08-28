@@ -19,23 +19,22 @@ Before running this example, ensure you have the following installed:
 
 ## Setup Instructions
 
-### 1. AWS Credentials Configuration
+### 1. API Token Configuration
 
-You'll need to configure your AWS credentials to access the BRIA model from Amazon ECR. Replace the placeholder values in the notebook:
+You'll need to configure your BRIA API token to access the model repository and attribution service. Replace the placeholder values in the notebook:
 
 ```python
-os.environ['AWS_ACCESS_KEY_ID'] = "<AWS_ACCESS_KEY_ID>"
-os.environ['AWS_SECRET_ACCESS_KEY'] = "<AWS_SECRET_ACCESS_KEY>"
+api_token = '<API_TOKEN>'
 ```
 
 **Required substitutions:**
-- `<AWS_ACCESS_KEY_ID>`: Your AWS access key ID
-- `<AWS_SECRET_ACCESS_KEY>`: Your AWS secret access key
+- `<API_TOKEN>`: Your BRIA API token for accessing the attribution service
 
 ### 2. Model Deployment
 
 The notebook will automatically:
-- Login to Amazon ECR
+- Fetch ECR credentials using your API token from the BRIA attribution service
+- Login to Amazon ECR using the fetched credentials
 - Pull the BRIA attribution model Docker image
 - Start the Triton inference server with the model
 
@@ -52,7 +51,7 @@ The model will be available on:
    ```python
    url = '<BRIA_EMBEDDINGS_URL>:8000'
    ```
-   Replace `<BRIA_EMBEDDINGS_URL>` with your server's IP address or hostname (localhost - in case of the same machine).
+   Replace `<BRIA_EMBEDDINGS_URL>` with your server's IP address or hostname (localhost if running on the same machine).
 
 2. **Image Path:**
    ```python
@@ -60,20 +59,20 @@ The model will be available on:
    ```
    Replace `<IMAGE_PATH>` with the path to your input image file.
 
-3. **API Token:**
+3. **API Token (in attribution request):**
    ```python
-   "agent": '<API-TOKEN>',
-   "api_token": '<API-TOKEN>'
+   api_token = '<API_TOKEN>'
    ```
-   Replace `<API-TOKEN>` with your BRA API token.
+   Replace `<API_TOKEN>` with your BRIA API token.
 
 ## Usage
 
 ### Step 1: Run the Docker Setup Cell
 
 Execute the first cell to:
-- Configure AWS credentials
-- Login to ECR
+- Configure your API token
+- Fetch ECR credentials from the BRIA attribution service
+- Login to ECR using the fetched credentials
 - Pull and run the BRIA attribution model container
 
 ### Step 2: Install Dependencies
@@ -116,7 +115,7 @@ The attribution API expects the following JSON structure:
   "embeddings_base64": "<base64_encoded_embeddings>",
   "embeddings_uid": "<unique_identifier>",
   "model_version": 2.3,
-  "agent": "<API-TOKEN>",
+  "agent": "<API_TOKEN>",
   "model_name": "replace-backgroud"
 }
 ```
