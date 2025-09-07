@@ -1,6 +1,10 @@
 # BRIA Attribution Model 
 
-This repository contains a Jupyter notebook demonstrating how to use the BRIA attribution model for image embedding generation and attribution API calls.
+This repository contains a Jupyter notebook demonstrating how to integrate the Bria attribution service providing full legal indemnity when hosting Bria's models on your cloud / environment.
+
+There are 2 parts to this integration:
+1. Installing the Bria  attribution model for calculating embeddings (irreversible vectors) of your generated images.
+2. API Integration for sharing the embeddings with Bria.
 
 ## Overview
 
